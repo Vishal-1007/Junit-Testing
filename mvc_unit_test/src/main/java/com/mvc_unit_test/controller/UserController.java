@@ -1,6 +1,7 @@
 package com.mvc_unit_test.controller;
 
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +38,10 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable int id, @RequestBody User user) {
         Optional<User> updated = service.updateUser(id, user);
+        
+        if(updated.isPresent()) {
+        	return new ResponseEntity(updated.get(),HttpStatus.OK);
+        }
         return updated.map(ResponseEntity::ok)              // 200
                       .orElseGet(() -> ResponseEntity.notFound().build()); // 404
     }
