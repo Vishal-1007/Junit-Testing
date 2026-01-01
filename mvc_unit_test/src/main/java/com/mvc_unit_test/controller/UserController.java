@@ -42,8 +42,8 @@ public class UserController {
         if(updated.isPresent()) {
         	return new ResponseEntity(updated.get(),HttpStatus.OK);
         }
-        return updated.map(ResponseEntity::ok)              // 200
-                      .orElseGet(() -> ResponseEntity.notFound().build()); // 404
+        
+        return new ResponseEntity("Not Found", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
